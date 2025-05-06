@@ -22,34 +22,34 @@ typedef struct kpq* KPQ;
 // ως όρισμα, της οποίας τα στοιχεία συγκρίνονται με βάση τη συνάρτηση compare.
 // Αν destroy_value != NULL, τότε καλείται destroy_value(value) κάθε φορά που αφαιρείται ένα στοιχείο.
 
-KPQ kqp_create(CompareFunc compare, int k, DestroyFunc destroy_value);
+KPQ kpq_create(CompareFunc compare, int k, DestroyFunc destroy_value);
 
-// Επιστρέφει τον αριθμό στοιχείων που περιέχει η ουρά kqp
+// Επιστρέφει τον αριθμό στοιχείων που περιέχει η ουρά kpq
 
-int kqp_size(KPQ kqp);
+int kpq_size(KPQ kpq);
 
 // Επιστρέφει το μεγαλύτερο στοιχείο της ουράς (μη ορισμένο αποτέλεσμα αν η ουρά είναι κενή)
 
-Pointer kqp_max(KPQ kqp);
+Pointer kpq_max(KPQ kpq);
 
 // Επιστρέφει το k-οστό μεγαλύτερο στοιχείο της ουράς (μη ορισμένο αποτέλεσμα αν η ουρά είναι λιγότερα από k στοιχεία)
 
-Pointer kqp_k_th(KPQ kqp);
+Pointer kpq_k_th(KPQ kpq);
 
-// Προσθέτει την τιμή value στην ουρά kqp.
+// Προσθέτει την τιμή value στην ουρά kpq.
 
-void kqp_insert(KPQ kqp, Pointer value);
+void kpq_insert(KPQ kpq, Pointer value);
 
 // Αφαιρεί το μεγαλύτερο στοιχείο της ουράς (μη ορισμένο αποτέλεσμα αν η ουρά είναι κενή)
 
-void kqp_remove_max(KPQ kqp);
+void kpq_remove_max(KPQ kpq);
 
 // Αλλάζει τη συνάρτηση που καλείται σε κάθε αφαίρεση/αντικατάσταση στοιχείου σε
 // destroy_value. Επιστρέφει την προηγούμενη τιμή της συνάρτησης.
 
-DestroyFunc kqp_set_destroy_value(KPQ kqp, DestroyFunc destroy_value);
+DestroyFunc kpq_set_destroy_value(KPQ kpq, DestroyFunc destroy_value);
 
-// Ελευθερώνει όλη τη μνήμη που δεσμεύει η ουρά kqp.
+// Ελευθερώνει όλη τη μνήμη που δεσμεύει η ουρά kpq.
 // Οποιαδήποτε λειτουργία πάνω στη ουρά μετά το destroy είναι μη ορισμένη.
 
-void kqp_destroy(KPQ kqp);
+void kpq_destroy(KPQ kpq);
