@@ -43,7 +43,7 @@ PriorityQueueNode pqueue_insert(PriorityQueue pqueue, Pointer value) {
 	return NULL;
 }
 
-void pqueue_remove(PriorityQueue pqueue, PriorityQueueNode) {
+void pqueue_remove(PriorityQueue pqueue, PriorityQueueNode node) {
 
 }
 
