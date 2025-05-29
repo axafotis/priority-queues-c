@@ -62,7 +62,7 @@ void test_insert(void) {
 	PriorityQueue pqueue = pqueue_create(compare_ints, NULL, NULL);
 	int N = 1000;
 	int* array = malloc(N * sizeof(*array));					// Στο pqueue θα προσθέσουμε pointers προς τα στοιχεία αυτού του πίνακα
-	PriorityQueueNode* nodes = malloc(N * sizeof(PriorityQueueNode));// Τα nodes που εισάγαμε
+	PriorityQueueNode* nodes = malloc(N * sizeof(PriorityQueueNode)); // Τα nodes που εισάγαμε
 
 	// insert N στοιχεία
 	for (int i = 0; i < N; i++) {
