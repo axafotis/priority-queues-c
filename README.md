@@ -1,152 +1,36 @@
-![run-tests](../../workflows/run-tests/badge.svg)
+# Priority Queues in C
 
-## 2025 Project 2
+Implementation of advanced **Priority Queue** data structures in C, with clean modular design and unit tests.  
+Includes:
+- **Priority Queue (PQueue)**: supports insertion, deletion of any node, and fast access to the maximum element.  
+- **Double-Ended Priority Queue (DEPQ)**: supports both minimum and maximum operations.  
+- **K-Priority Queue (KPQ – top-k)**: maintains the k largest elements while supporting efficient updates.
 
-Εκφώνηση: https://k08.chatzi.org/projects/project2/
+---
 
+## Features & Complexities
+- **PQueue**  
+  - Insert / remove: O(log n)  
+  - Access max: O(1)  
 
-### Προσωπικά στοιχεία
+- **DEPQ**  
+  - Insert / remove_min / remove_max: O(log n)  
+  - Access min / max: O(1)  
 
-Στο αρχείο `AUTHORS` προσθέστε μια γραμμή με την παρακάτω μορφή:
+- **KPQ (top-k)**  
+  - Insert / remove_max: O(log n)  
+  - Access max / k_th: O(1)  
 
-```
-sdi1900307,my-github-axafotis,Φωτης Αξαοπουλος  
-```
+✅ All data structures tested with unit tests.  
+✅ No memory leaks (valgrind clean).  
+✅ Continuous Integration with GitHub Actions (Ubuntu runner).
 
-Η σωστή μορφή του αρχείου ελέγχεται αυτόματα όταν κάνετε push στο github, σε
-περίπτωση λάθους θα πάρετε μήνυμα στο email σας και θα πρέπει να το διορθώσετε για
-να γίνει δεκτή η εργασία.
+---
 
-### Ασκήσεις που παραδίδονται
+## Build & Run
+```bash
+# Build
+make
 
-Συμπληρώστε `[x]` στις ασκήσεις (και τυχόν bonus) που παραδίδετε.
-
-- [x] Άσκηση 1
-- [x] Άσκηση 2
-- [x] Άσκηση 3
-- [ ] Άσκηση 4
-- [ ] Άσκηση 5
-- [ ] Bonus 1
-- [ ] Bonus 2
-
-### Documentation
-
-Συμπληρώστε εδώ __όσο documentation χρειάζεται__ ώστε οι βαθμολογητές να
-κατανοήσουν πλήρως τις λύσεις σας και να τις βαθμολογήσουν ανάλογα. Αυτό θα
-πρέπει να γίνει ανεξάρτητα με το αν ο κώδικάς σας είναι καλά σχολιασμένος,
-πράγμα που συνιστάται.
-
-
-ασκηση 3 (μερικες σημαντικες πληροφοριες) :
-
-+ ADTKPQ – Λογική διαχείρισης destroy και μνήμης
-Κατά την υλοποίηση της KPQ δομής, ένα σημαντικό πρόβλημα που έπρεπε να λυθεί ήταν η σωστή και ασφαλής διαχείριση μνήμης, ειδικά σε σχέση με το DestroyFunc που μπορεί να περάσει ο χρήστης κατά τη δημιουργία της δομής.
-
-+ Βασικό πρόβλημα
-Επειδή τα αντικείμενα μέσα στη KPQ (k-Priority Queue) μετακινούνται πολλές φορές μεταξύ των δύο εσωτερικών δομών top_k και rest:
-
-Κάθε στοιχείο μπορεί να πάει πολλές φορές από το rest στο top_k και αντίστροφα.
-
-Κατά τη μεταφορά, δεν πρέπει να καταστρέφονται/ελευθερώνονται τα δεδομένα, ακόμα κι αν ο χρήστης έχει ορίσει DestroyFunc.
-
-Γι’ αυτό, κατά τη δημιουργία (kpq_create) ορίσαμε εσωτερικά NULL destroy functions και στις δύο εσωτερικές δομές (depq_create, pqueue_create), ώστε να μην κάνουν αυτές αυτόματη αποδέσμευση των τιμών.
-
-Αντιθέτως, η ευθύνη της αποδέσμευσης μεταφέρθηκε:
-
-Μέσα στην kpq_remove_max, αν το στοιχείο αφαιρείται οριστικά και ο χρήστης έχει περάσει destroy_value.
-
-Μέσα στην kpq_destroy, με παρόμοια λογική και προσοχή να μην γίνει διπλό destroy στα ίδια δεδομένα.
-
-
-Αποφεύγουμε memory leaks αλλά και double free bugs, ανάλογα με το πώς καλείται η remove_max ή η destroy.
-
-Επιτρέπουμε στους χρήστες να ορίσουν προαιρετικό destroy_value, το οποίο εφαρμόζεται ακριβώς τη στιγμή που το αντικείμενο αφαιρείται από τη δομή.
-
-+ Πρακτικό ζήτημα με unit tests
-Το πρόβλημα αυτό έγινε ιδιαίτερα εμφανές όταν τρέχαμε τα tests βηματικά, δηλαδή:
-
-Εκτελούσαμε χειροκίνητα kpq_remove_max και μετά καλούσαμε kpq_destroy.
-
-Τα στοιχεία που είχαν ήδη αφαιρεθεί με kpq_remove_max δεν υπήρχαν πια στη δομή.
-
-Αν δεν κάναμε destroy την ώρα του remove_max, αυτά τα στοιχεία δεν μπορούσαν πλέον να αποδεσμευτούν σωστά → προέκυπταν memory leaks.
-
-Αντίθετα, σε tests που δεν αφαιρούν χειροκίνητα στοιχεία, αλλά καλούν destroy στο τέλος, έπρεπε να μην γίνει δεύτερη φορά destroy (αλλιώς θα προέκυπτε double free).
-
-+ Τι κάνει τελικά η kpq_destroy
-Η kpq_destroy ουσιαστικά κάνει την ίδια δουλειά με την kpq_remove_max: αδειάζει τη δομή αφαιρώντας κάθε στοιχείο από top_k και rest με τον ίδιο αλγόριθμο.
-
-Όμως:
-
-Αν έχει δοθεί destroy_value από τον χρήστη → το καλεί για κάθε στοιχείο.
-
-Αν δεν έχει δοθεί → απλώς αδειάζει τις εσωτερικές δομές, χωρίς να αποδεσμεύσει τη μνήμη κάθε στοιχείου.
-
-
-
-++++ΠΟΛΥΠΛΟΚΟΤΗΤΕΣ :
-
-Ασκηση 1 :
-
-*pqueue_create : Επειδή χρησιμοποιούμε AVL Tree για το Set , αρα n inserts  με nlogn τυο καθε ενα , συνολικα Ο(nlogn)    
-
-*pqueue_size : O(1)
-
-*pqueue_max :  O(1) 
-
-*pqueue_max_node :O(1)
-
-*pqueue_insert :   Όλες οι βασικές πράξεις (insert, delete, search) σε AVL έχουν  O(log n) πολυπλοκότητα λόγω ισοζύγισης.
-
-*pqueue_remove :set_node_value: {set_remove: O(log n) σε AVL (εύρεση + αναδόμηση).} Αρα
- συνολική πολυπλοκότητα: O(log n).
-
-*pqueue_node_value : O(1)
-
-*pqueue_set_destroy_value : O(1)
-
-*pqueue_destroy : Το AVL έχει n κόμβους.
- Αρα συνολική πολυπλοκότητα: O(n).
-
-
- Ασκηση 2 :
- 
- *depq_create : O(1)
-
- *depq_size :O(1)
-
- *depq_max :Ο(1)
-
- *depq_min :O(1)
-
- *depq_insert :  Όλες οι βασικές πράξεις (insert, delete, search) σε AVL έχουν  O(log n) πολυπλοκότητα λόγω ισοζύγισης.
-
- *depq_remove_max : εξαρταται απο set_remove(.... ) Αρα O(log n), λόγω αναδιάρθρωσης AVL.
-
- *depq_remove_min : εξαρταται απο set_remove(.... ) Αρα O(log n), λόγω αναδιάρθρωσης AVL.
-
- *depq_set_destroy_value : O(1)
-
- *depq_destroy :O(n)
-
-
- Ασκηση 3 :
-
- *kpq_create : συνολικα O(1) γιατι δεν εισαγουμε τιποτα απλα τη δημιουργουμε
-
- *kpq_size : Ο(1)
- 
- *kpq_max : O(1) γιατι καλει την depq_max
-
- *kpq_k_th : Ο(1) γιατι καλει την depq_min(kpq->topk)
-
- *kpq_insert : O(logn) για τον ιδιο που γραψαμε και στην depq_insert και pqueue_insert
-
- *kpq_remove_max : O(log n), λόγω αναδιάρθρωσης AVL.
-
- *kpq_set_destroy_value : O(1)
-
- *kpq_destroy : O(n) λογο διαγραφης n στοιχειων
-
-
-
+# Run unit tests
+make -C tests
