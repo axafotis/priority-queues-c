@@ -1,35 +1,45 @@
 # Priority Queues in C
 
 Implementation of advanced **Priority Queue** data structures in C, with clean modular design and unit tests.  
-Includes:
-- **Priority Queue (PQueue)**: supports insertion, deletion of any node, and fast access to the maximum element.  
-- **Double-Ended Priority Queue (DEPQ)**: supports both minimum and maximum operations.  
-- **K-Priority Queue (KPQ – top-k)**: maintains the k largest elements while supporting efficient updates.
+This project was developed as part of the **Data Structures & Programming Techniques** course (NKUA).
 
 ---
 
-## Features & Complexities
-- **PQueue**  
-  - Insert / remove: O(log n)  
-  - Access max: O(1)  
+## Implemented Data Structures
+- **Priority Queue (PQueue)**  
+  - Insert / remove any node  
+  - Fast access to maximum element  
 
-- **DEPQ**  
-  - Insert / remove_min / remove_max: O(log n)  
-  - Access min / max: O(1)  
+- **Double-Ended Priority Queue (DEPQ)**  
+  - Access both minimum and maximum  
+  - Remove from either end  
 
-- **KPQ (top-k)**  
-  - Insert / remove_max: O(log n)  
-  - Access max / k_th: O(1)  
+- **K-Priority Queue (KPQ – top-k)**  
+  - Maintains the k largest elements  
+  - Efficient max / k-th element queries  
 
-✅ All data structures tested with unit tests.  
-✅ No memory leaks (valgrind clean).  
-✅ Continuous Integration with GitHub Actions (Ubuntu runner).
+---
+
+## Time Complexities
+- **PQueue**: Insert/Remove O(log n), Max O(1)  
+- **DEPQ**: Insert/Remove O(log n), Min/Max O(1)  
+- **KPQ**: Insert/Remove O(log n), Max/k-th O(1)  
+
+---
+
+## Key Highlights
+- ✅ Clean modular C code  
+- ✅ Memory management checked (Valgrind clean)  
+- ✅ Automated tests with `make`  
+- ✅ Continuous Integration (GitHub Actions)  
+- ✅ Hands-on experience with **C, algorithms, data structures, and Git**  
+- ✅ Source code **commented in Greek** (per university requirements) but fully capable of producing **professional English documentation/comments**  
 
 ---
 
 ## Build & Run
 ```bash
-# Build
+# Build project
 make
 
 # Run unit tests
