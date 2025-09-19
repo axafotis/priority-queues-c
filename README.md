@@ -44,6 +44,7 @@ make
 
 # Run unit tests
 make -C tests
+```
 
 ---
 *Note: Source code is commented in Greek (per university requirements), but I am fully capable of producing professional English documentation/comments.*
